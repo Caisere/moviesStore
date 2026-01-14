@@ -31,4 +31,21 @@ export const SignupSchema = SignupBaseSchema.refine(
     },
 )
 
+
 export type SignupFormType = z.infer<typeof SignupSchema>
+
+
+export const LoginBaseSchema = z.object({
+    email: z.email(),
+    password: z
+        .string()
+        .min(8, 'Password must be at least 8 characters long')
+        .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .regex(/[0-9]/, 'Password must contain at least one number')
+        .regex(
+            /[^A-Za-z0-9]/,
+            'Password must contain at least one special character',
+        ),
+})
+
+export type LoginFormType = z.infer<typeof LoginBaseSchema>

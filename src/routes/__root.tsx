@@ -8,7 +8,7 @@ export const Route = createRootRoute({
   component: () => (
     <div className='relative'>
       <Header />
-      <main className='mt-1'>
+      <main className='max-h-screen max-w-8xl w-[95%] mx-auto'>
         <Outlet />
       </main>
       <TanStackDevtools
