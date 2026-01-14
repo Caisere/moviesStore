@@ -3,8 +3,6 @@ import type { User } from '@/types'
 import Users from '@/components/users'
 
 
-const yourToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMyMjRhZTJmLWZjODEtNDc3NC1iYTRkLTExZmQzYzBjM2RjMCIsImlhdCI6MTc2ODMxNjY0NiwiZXhwIjoxNzY4OTIxNDQ2fQ.5wMuPXj75-zeCniPImifV2__ZuWp8I1I2ErIozQaaKA'
-
 export const Route = createFileRoute('/dashboard')({
     ssr: true,
     loader: async () => {
@@ -12,7 +10,7 @@ export const Route = createFileRoute('/dashboard')({
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${yourToken}`,
+                'Authorization': `Bearer ${import.meta.env.VITE_TOKEN}`, // GENERATED A USER TOKEN FROM THE EXPRESS-API PROJECT FOR TESTING  😋🥰
             }
         })
         const data = await response.json();
