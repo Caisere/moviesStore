@@ -12,8 +12,8 @@ const navigationLinks: Array<NavigationLinks> = [
         label: 'Home'
     },
     {
-        to: '/browsejobs',
-        label: 'Browse Jobs'
+        to: '/movies',
+        label: 'Movies'
     },
     {
         to: '/login',
@@ -25,7 +25,7 @@ const navigationLinks: Array<NavigationLinks> = [
 export default function Header() {
     return (
         <>
-            <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
+            <header className="p-4 flex items-center bg-primary text-white shadow-lg fixed top-0 inset-x-0">
                 {navigationLinks.map(link => (
                     <div className="" key={link.label}>
                         <Link to={link.to}>{link.label}</Link>

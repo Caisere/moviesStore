@@ -9,11 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as BrowsejobsRouteImport } from './routes/browsejobs'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoviesRoute = MoviesRouteImport.update({
+  id: '/movies',
+  path: '/movies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -24,11 +35,6 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BrowsejobsRoute = BrowsejobsRouteImport.update({
-  id: '/browsejobs',
-  path: '/browsejobs',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,40 +43,58 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/browsejobs': typeof BrowsejobsRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/movies': typeof MoviesRoute
+  '/signup': typeof SignupRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/browsejobs': typeof BrowsejobsRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/movies': typeof MoviesRoute
+  '/signup': typeof SignupRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/browsejobs': typeof BrowsejobsRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/movies': typeof MoviesRoute
+  '/signup': typeof SignupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/browsejobs' | '/dashboard' | '/login'
+  fullPaths: '/' | '/dashboard' | '/login' | '/movies' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/browsejobs' | '/dashboard' | '/login'
-  id: '__root__' | '/' | '/browsejobs' | '/dashboard' | '/login'
+  to: '/' | '/dashboard' | '/login' | '/movies' | '/signup'
+  id: '__root__' | '/' | '/dashboard' | '/login' | '/movies' | '/signup'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BrowsejobsRoute: typeof BrowsejobsRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  MoviesRoute: typeof MoviesRoute
+  SignupRoute: typeof SignupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movies': {
+      id: '/movies'
+      path: '/movies'
+      fullPath: '/movies'
+      preLoaderRoute: typeof MoviesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -85,13 +109,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/browsejobs': {
-      id: '/browsejobs'
-      path: '/browsejobs'
-      fullPath: '/browsejobs'
-      preLoaderRoute: typeof BrowsejobsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -104,9 +121,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BrowsejobsRoute: BrowsejobsRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  MoviesRoute: MoviesRoute,
+  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
