@@ -3,6 +3,15 @@ import { useLoaderData } from "@tanstack/react-router"
 
 function Users () {
     const users = useLoaderData({from: '/dashboard'})
+
+    if(!users) {
+        return (
+            <div className="mt-32">
+                No Users
+            </div>
+        )
+    }
+
     return (
         <div>
             {users.map(user => (

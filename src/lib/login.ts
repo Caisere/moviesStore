@@ -1,4 +1,5 @@
-import axios from 'axios'
+import { api } from './axios'
+// import type { AxiosError } from 'axios'
 import type { LoginFormType } from '@/types'
 
 
@@ -16,12 +17,17 @@ type LoginResponse = {
 }
 
 export async function Login({email, password }: LoginFormType) {
-    const response = await axios.post<LoginResponse>(
-        `${import.meta.env.VITE_LOCAL_HOST}/auth/login`,
-        {
-            email,
-            password,
-        },
-    )
-    return response
+    try {
+        const response = await api.post<LoginResponse>(
+            `${import.meta.env.VITE_LOCAL_HOST}/auth/login`,
+            {
+                email,
+                password,
+            },
+        )
+        return response
+    } catch (error) {
+        // const axiosError = error as AxiosError<{message: string}>
+        throw new Error(error as string)
+    }
 }

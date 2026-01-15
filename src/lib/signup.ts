@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { api } from './axios'
 import type z from 'zod'
 import { SignupBaseSchema } from '@/types'
 
@@ -17,7 +18,7 @@ type SignupResponse = {
 }
 
 export async function SignUp({ name, email, password }: SignupType) {
-    const response = await axios.post<SignupResponse>(
+    const response = await api.post<SignupResponse>(
         `${import.meta.env.VITE_LOCAL_HOST}/auth/register`,
         {
             name,
