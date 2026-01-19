@@ -108,7 +108,7 @@ function RouteComponent() {
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <MovieCard {...movie} />
+                {/* <MovieCard {...movie} /> */}
               </div>
             ))}
           </div>

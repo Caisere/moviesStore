@@ -1,4 +1,4 @@
-import { api } from './axios'
+import { api } from '../axios'
 // import type { AxiosError } from 'axios'
 import type { LoginFormType } from '@/types'
 

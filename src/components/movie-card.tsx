@@ -3,22 +3,22 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface MovieCardProps {
-  id: number;
+  id: string;
   title: string;
-  year: number;
+  releaseYear: number;
   rating: number;
   posterUrl: string;
-  genre: string;
+  genres: Array<string>;
   status?: "watching" | "completed" | "plan_to_watch" | null;
   onAddToWatchlist?: () => void;
 }
 
 const MovieCard = ({
   title,
-  year,
+  releaseYear,
   rating,
   posterUrl,
-  genre,
+  genres,
   status,
   onAddToWatchlist,
 }: MovieCardProps) => {
@@ -82,9 +82,9 @@ const MovieCard = ({
           {title}
         </h3>
         <div className="flex items-center justify-between mt-1">
-          <span className="text-sm text-muted-foreground">{year}</span>
+          <span className="text-sm text-muted-foreground">{releaseYear}</span>
           <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">
-            {genre}
+            {genres.join(' ').split("")}
           </span>
         </div>
       </div>

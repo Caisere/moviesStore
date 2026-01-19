@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { api } from './axios'
+
+import { api } from '../axios'
 import type z from 'zod'
 import { SignupBaseSchema } from '@/types'
 

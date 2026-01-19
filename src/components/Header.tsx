@@ -3,29 +3,6 @@ import { Film, List, LogIn, Search } from "lucide-react"
 import { Button } from "./ui/button"
 import { cn } from "@/lib/utils";
 
-// type NavigationLinks = {
-//     to: string
-//     label: string
-// }
-
-
-// const navigationLinks: Array<NavigationLinks> = [
-//     {
-//         to: '/',
-//         label: 'Home'
-//     },
-//     {
-//         to: '/movies',
-//         label: 'Movies'
-//     },
-//     {
-//         to: '/login',
-//         label: 'Login'
-//     }
-// ]
-
-
-
 const navLinks = [
   { to: "/", label: "Home", icon: Film },
   { to: "/movies", label: "Browse", icon: Search },

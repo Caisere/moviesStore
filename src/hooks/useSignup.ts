@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from "sonner"
 import { useNavigate } from '@tanstack/react-router'
-import { SignUp } from '@/lib/signup'
+import { SignUp } from '@/lib/auth/signup'
+
 
 
 export function useSignUp() {

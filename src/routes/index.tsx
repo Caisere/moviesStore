@@ -1,40 +1,27 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, useLoaderData } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
-import heroBg from "/hero-bg.jpg";
 import HeroSection from '@/components/hero-card'
 import { Button } from '@/components/ui/button'
 import MovieCard from '@/components/movie-card'
+import { getTrendingMovies } from '@/lib/movies/getTrendingMovies';
+import { getAllMovies } from '@/lib/movies/getAllMovies';
 
 export const Route = createFileRoute('/')({
-  component: App,
+    loader: async () => {
+        const [trendingMovies, movies] = await Promise.all([getTrendingMovies(), getAllMovies()])
+        return {trendingMovies, movies}
+    },
+    component: App,
 })
 
-
-const trendingMovies = [
-    { id: 1, title: "Dune: Part Two", year: 2024, rating: 8.8, posterUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=600&fit=crop", genre: "Sci-Fi" },
-    { id: 2, title: "Oppenheimer", year: 2023, rating: 8.5, posterUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop", genre: "Drama" },
-    { id: 3, title: "The Batman", year: 2022, rating: 7.8, posterUrl: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=400&h=600&fit=crop", genre: "Action" },
-    { id: 4, title: "Everything Everywhere", year: 2022, rating: 8.0, posterUrl: "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=600&fit=crop", genre: "Adventure" },
-    { id: 5, title: "Interstellar", year: 2014, rating: 8.7, posterUrl: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=400&h=600&fit=crop", genre: "Sci-Fi" },
-  ];
-  
-  const watchlistMovies = [
-    { id: 6, title: "Blade Runner 2049", year: 2017, rating: 8.0, posterUrl: "https://images.unsplash.com/photo-1534809027769-b00d750a6bac?w=400&h=600&fit=crop", genre: "Sci-Fi", status: "watching" as const },
-    { id: 7, title: "The Godfather", year: 1972, rating: 9.2, posterUrl: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop", genre: "Crime", status: "completed" as const },
-    { id: 8, title: "Inception", year: 2010, rating: 8.8, posterUrl: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&h=600&fit=crop", genre: "Thriller", status: "plan_to_watch" as const },
-  ];
-
 function App() {
+    const {trendingMovies, movies:watchlistMovies} = useLoaderData({from: '/'})
+
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <HeroSection
-        backgroundImage={heroBg}
-        title="Your Cinema, Your Rules"
-        description="Track your favorite movies, build personalized watchlists, and never miss a must-see film again. Join millions of movie enthusiasts in curating the ultimate viewing experience."
-        rating={9.2}
-        year={2024}
-      />
+      <HeroSection/>
 
       {/* Trending Section */}
       <section className="py-16 container mx-auto px-4">
@@ -69,12 +56,12 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="font-display text-3xl font-bold text-foreground">Your Watchlist</h2>
+              <h2 className="font-display text-3xl font-bold text-foreground">All Movies</h2>
               <p className="text-muted-foreground mt-1">Continue where you left off</p>
             </div>
             <Link to="/watchlist">
               <Button variant="ghost" className="gap-2">
-                Manage Watchlist
+                Explore our Movies Collection
                 <ChevronRight className="w-4 h-4" />
               </Button>
             </Link>
@@ -141,7 +128,7 @@ function App() {
       {/* Footer */}
       <footer className="py-8 border-t border-border">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 CineVault. Built for movie lovers.</p>
+          <p>© {new Date().getFullYear()} CineVault. Built for movie lovers.</p>
         </div>
       </footer>
     </div>

@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { toast } from "sonner"
 import { useNavigate, useRouter } from '@tanstack/react-router'
 // import type { AxiosError } from 'axios'
-import { Login } from '@/lib/login'
+import { Login } from '@/lib/auth/login'
 
 // type ApiError = {
 //     message: string,
