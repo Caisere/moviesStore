@@ -19,10 +19,20 @@ type MoviesResponse = {
     movies: Array<Movies>
 }
 
+type MoviesByIdResponse = {
+    success: string,
+    movie: Movies
+}
+
 
 export async function getAllMovies () {
     const response = await api.get<MoviesResponse>('/movies')
     const data = response.data.movies;
-    const trendingMovies = data
-    return trendingMovies
+    return  data
+}
+
+export async function getMoviesById (id: string) {
+    const response = await api.get<MoviesByIdResponse>(`/movies/${id}`)
+    const movie = response.data.movie;
+    return movie
 }

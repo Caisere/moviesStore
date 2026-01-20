@@ -12,9 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as MoviesRouteImport } from './routes/movies'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as LoginRouteRouteImport } from './routes/login/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MoviesMovieIdRouteImport } from './routes/movies.$movieId'
 
 const WatchlistRoute = WatchlistRouteImport.update({
   id: '/watchlist',
@@ -31,14 +32,14 @@ const MoviesRoute = MoviesRouteImport.update({
   path: '/movies',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRouteRoute = LoginRouteRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -46,58 +47,75 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MoviesMovieIdRoute = MoviesMovieIdRouteImport.update({
+  id: '/$movieId',
+  path: '/$movieId',
+  getParentRoute: () => MoviesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRouteRoute
   '/dashboard': typeof DashboardRoute
-  '/login': typeof LoginRoute
-  '/movies': typeof MoviesRoute
+  '/movies': typeof MoviesRouteWithChildren
   '/signup': typeof SignupRoute
   '/watchlist': typeof WatchlistRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRouteRoute
   '/dashboard': typeof DashboardRoute
-  '/login': typeof LoginRoute
-  '/movies': typeof MoviesRoute
+  '/movies': typeof MoviesRouteWithChildren
   '/signup': typeof SignupRoute
   '/watchlist': typeof WatchlistRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRouteRoute
   '/dashboard': typeof DashboardRoute
-  '/login': typeof LoginRoute
-  '/movies': typeof MoviesRoute
+  '/movies': typeof MoviesRouteWithChildren
   '/signup': typeof SignupRoute
   '/watchlist': typeof WatchlistRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
     | '/login'
+    | '/dashboard'
     | '/movies'
     | '/signup'
     | '/watchlist'
+    | '/movies/$movieId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/movies' | '/signup' | '/watchlist'
+  to:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/movies'
+    | '/signup'
+    | '/watchlist'
+    | '/movies/$movieId'
   id:
     | '__root__'
     | '/'
-    | '/dashboard'
     | '/login'
+    | '/dashboard'
     | '/movies'
     | '/signup'
     | '/watchlist'
+    | '/movies/$movieId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRouteRoute: typeof LoginRouteRoute
   DashboardRoute: typeof DashboardRoute
-  LoginRoute: typeof LoginRoute
-  MoviesRoute: typeof MoviesRoute
+  MoviesRoute: typeof MoviesRouteWithChildren
   SignupRoute: typeof SignupRoute
   WatchlistRoute: typeof WatchlistRoute
 }
@@ -125,18 +143,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -146,14 +164,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/movies/$movieId': {
+      id: '/movies/$movieId'
+      path: '/$movieId'
+      fullPath: '/movies/$movieId'
+      preLoaderRoute: typeof MoviesMovieIdRouteImport
+      parentRoute: typeof MoviesRoute
+    }
   }
 }
 
+interface MoviesRouteChildren {
+  MoviesMovieIdRoute: typeof MoviesMovieIdRoute
+}
+
+const MoviesRouteChildren: MoviesRouteChildren = {
+  MoviesMovieIdRoute: MoviesMovieIdRoute,
+}
+
+const MoviesRouteWithChildren =
+  MoviesRoute._addFileChildren(MoviesRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRouteRoute: LoginRouteRoute,
   DashboardRoute: DashboardRoute,
-  LoginRoute: LoginRoute,
-  MoviesRoute: MoviesRoute,
+  MoviesRoute: MoviesRouteWithChildren,
   SignupRoute: SignupRoute,
   WatchlistRoute: WatchlistRoute,
 }

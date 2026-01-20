@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { getTrendingMovies } from '@/lib/movies/getTrendingMovies';
 import { getAllMovies } from '@/lib/movies/getAllMovies';
+import Footer from '@/components/footer';
 
 export const Route = createFileRoute('/movies')({
     loader: async () => {
@@ -54,7 +55,7 @@ function RouteComponent() {
               />
             </div>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <div className="flex gap-1 p-1 bg-secondary rounded-lg">
                 {genres.map((genre) => (
                   <Button

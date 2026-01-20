@@ -11,6 +11,7 @@ export const Route = createFileRoute('/')({
         const [trendingMovies, movies] = await Promise.all([getTrendingMovies(), getAllMovies()])
         return {trendingMovies, movies}
     },
+    // pendingComponent: <p></p>,
     component: App,
 })
 
@@ -124,13 +125,6 @@ function App() {
           ))}
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-8 border-t border-border">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© {new Date().getFullYear()} CineVault. Built for movie lovers.</p>
-        </div>
-      </footer>
     </div>
   )
 }
