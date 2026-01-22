@@ -1,12 +1,12 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router'
 import { Grid, List, Search } from 'lucide-react';
+import {motion} from 'framer-motion'; 
 import { useState } from 'react';
 import MovieCard from '@/components/movie-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { getTrendingMovies } from '@/lib/movies/getTrendingMovies';
 import { getAllMovies } from '@/lib/movies/getAllMovies';
-import Footer from '@/components/footer';
 
 export const Route = createFileRoute('/movies')({
     loader: async () => {
@@ -97,21 +97,40 @@ function RouteComponent() {
           </div>
   
           {/* Movie Grid */}
-          <div className={
-            viewMode === "grid" 
-              ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6"
-              : "flex flex-col gap-4"
-          }>
+          <motion.div 
+            variants={{
+              hidden: {
+                opacity: 0
+              },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.15
+                }
+              }
+            }}
+            initial='hidden'
+            animate='show' 
+            className={
+              viewMode === "grid" 
+                ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6"
+                : "flex flex-col gap-4"
+            }
+          >
             {filteredMovies.map((movie, index) => (
-              <div 
+              <motion.div
+                variants={{
+                  hidden: {opacity: 0},
+                  show: {opacity: 1}
+                }} 
                 key={movie.id}
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <MovieCard {...movie} />
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
   
           {filteredMovies.length === 0 && (
             <div className="text-center py-20">

@@ -1,7 +1,11 @@
 import { Play, Plus, Star } from "lucide-react";
+import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import heroBg from "/hero-bg.jpg";
+
+
+const MotionButton = motion(Button);
 
 
 const HeroSection = () => {
@@ -46,10 +50,23 @@ const HeroSection = () => {
           {/* Actions */}
           <div className="flex flex-wrap items-center gap-4">
             <Link to="/movies">
-              <Button variant="default" size="lg" className="gap-3">
+              <MotionButton 
+                whileHover={{
+                  scale: 1.1,
+                }}
+                whileTap={{
+                  scale: 0.9,
+                }} 
+                transition={{
+                  bounceStiffness: 600,
+                  bounceDamping: 10,
+                }}
+                variant="default" 
+                size="lg" 
+                className="gap-3 cursor-pointer">
                 <Play className="w-5 h-5 fill-current" />
                 Browse Movies
-              </Button>
+              </MotionButton>
             </Link>
 
             <Button variant="outline" size="lg" className="gap-3">

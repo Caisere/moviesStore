@@ -1,4 +1,4 @@
-import { createFileRoute, useLoaderData } from '@tanstack/react-router'
+import { createFileRoute, useLoaderData, useParams } from '@tanstack/react-router'
 import { getMoviesById } from '@/lib/movies/getAllMovies'
 
 export const Route = createFileRoute('/movies/$movieId')({
@@ -14,7 +14,14 @@ export const Route = createFileRoute('/movies/$movieId')({
 })
 
 function RouteComponent() {
-    const movie = useLoaderData({from: '/movies/$movieId'})
-    console.log(movie)
-  return <div className='mt-30'>Hello "/movies/$movieId"!</div>
+    const params = Route.useParams();
+    const movie = useLoaderData({ from: '/movies/$movieId' });
+    console.log(movie, params);
+    return ( 
+        <div className='mt-30'>
+            <h1>Hello "/movies/$movieId"!</h1>
+        </div>
+    )
 }
+
+// check a component outside that have access to the params 
